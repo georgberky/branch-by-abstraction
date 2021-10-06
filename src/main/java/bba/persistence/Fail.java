@@ -1,4 +1,4 @@
-package dev.berky.talks.bba.persistence;
+package bba.persistence;
 
 import java.security.SecureRandom;
 import java.util.Random;

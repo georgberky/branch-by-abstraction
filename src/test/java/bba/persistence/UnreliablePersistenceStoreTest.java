@@ -1,4 +1,4 @@
-package dev.berky.talks.bba.persistence;
+package bba.persistence;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

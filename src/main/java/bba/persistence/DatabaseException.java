@@ -1,4 +1,4 @@
-package dev.berky.talks.bba.persistence;
+package bba.persistence;
 
 public class DatabaseException extends RuntimeException {
     public DatabaseException(String message) {
