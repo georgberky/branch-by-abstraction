@@ -1,7 +1,8 @@
 package dev.berky.talks.bba.persistence;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -17,12 +18,13 @@ class UnreliablePersistenceStoreTest {
         store = new UnreliablePersistenceStore();
     }
 
-    @Test
-    void loadByName() {
-        Map<String, Object> retrieved = store.loadByName("someName");
+    @ParameterizedTest
+    @ValueSource(strings = { "someName", "someOtherName", "yetAnotherName" })
+    void loadByName(String name) {
+        Map<String, Object> retrieved = store.loadByName(name);
 
         assertThat(retrieved)
-            .containsEntry("name", "someName")
+            .containsEntry("name", name)
             .containsEntry("quality", "🤮")
             .containsEntry("olfactory", "💩")
             .hasEntrySatisfying("created", v -> LocalDateTime.parse((String) v)

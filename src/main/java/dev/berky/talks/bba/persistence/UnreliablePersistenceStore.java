@@ -5,7 +5,7 @@ import java.util.Map;
 public class UnreliablePersistenceStore {
     public Map<String, Object> loadByName(String name) {
         return Map.of(
-            "name", "someName",
+            "name", name,
             "created", "2007-12-03T10:15:30",
             "quality", "🤮",
             "olfactory", "💩"
