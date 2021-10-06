@@ -3,10 +3,12 @@ package bba.persistence;
 import java.util.List;
 import java.util.Map;
 
+import static bba.persistence.Fail.failRandomly;
+
 public class UnreliablePersistenceStore {
 
     public Map<String, Object> loadByName(String name) {
-        Fail.failRandomly(() -> new DatabaseException("database locked!"));
+        failRandomly(() -> new DatabaseException("database locked!"));
 
         return Map.of(
             "name", name,
