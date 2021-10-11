@@ -23,7 +23,7 @@ class UnreliablePersistenceStoreTest {
 
     @Test
     void loadAll() {
-        List<Map<String, Object>> all = store.loadAll();
+        List<Map<String, Object>> all = store.loadAll_legacy();
 
         assertSoftly(softly -> {
             softly.assertThat(all)
@@ -47,7 +47,7 @@ class UnreliablePersistenceStoreTest {
     @ParameterizedTest
     @ValueSource(strings = { "someName", "someOtherName", "yetAnotherName" })
     void loadByName(String name) {
-        Map<String, Object> retrieved = store.loadByName(name);
+        Map<String, Object> retrieved = store.loadByName_legacy(name);
 
         assertThat(retrieved)
             .containsEntry("name", name)
