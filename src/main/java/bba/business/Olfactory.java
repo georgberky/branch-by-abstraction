@@ -8,7 +8,7 @@ public enum Olfactory {
     ROSY("🌹"),
     CHERRY("🌸");
 
-    private String representation;
+    private final String representation;
 
     Olfactory(String representation) {
 

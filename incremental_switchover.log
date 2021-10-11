@@ -49,4 +49,21 @@
 [main] INFO bba.business.SecondBusinessService - Found data with name: name2
 [main] INFO bba.business.SecondBusinessService - Data has quality: SMELLY
 [main] INFO bba.app.Main - Response: 200 OK
+---> refactor data class internally
+[main] INFO bba.app.Main - Booting application
+[main] INFO bba.persistence.UnreliablePersistenceStore - Created: UnreliablePersistenceStore
+[main] INFO bba.business.FirstBusinessService - Created: FirstBusinessService
+[main] INFO bba.business.SecondBusinessService - Created: SecondBusinessService
+[main] INFO bba.web.HttpApi - Created: HttpApi
+[main] INFO bba.web.HttpApi - Accepting HTTP requests
+[main] INFO bba.web.HttpApi - Received request: GET /something
+[main] INFO bba.business.FirstBusinessService - Doing something first!
+[main] INFO bba.persistence.UnreliablePersistenceStore - Serving data for name1
+[main] INFO bba.business.FirstBusinessService - Found data with name: name1
+[main] INFO bba.business.FirstBusinessService - Data has quality: BAD
+[main] INFO bba.business.SecondBusinessService - Doing something second!
+[main] INFO bba.persistence.UnreliablePersistenceStore - Serving data for name2
+[main] INFO bba.business.SecondBusinessService - Found data with name: name2
+[main] INFO bba.business.SecondBusinessService - Data has quality: SMELLY
+[main] INFO bba.app.Main - Response: 200 OK
 
