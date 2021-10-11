@@ -5,6 +5,7 @@ import java.util.Map;
 public final class Data {
     private final Map<String, Object> data;
 
+    @Deprecated
     public Data(Map<String, Object> data) {
         this.data = Map.copyOf(data);
     }
