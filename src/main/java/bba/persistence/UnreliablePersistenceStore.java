@@ -1,5 +1,7 @@
 package bba.persistence;
 
+import bba.business.Data;
+import bba.business.DataStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,11 +10,16 @@ import java.util.Map;
 
 import static bba.persistence.Fail.failRandomly;
 
-public class UnreliablePersistenceStore {
+public class UnreliablePersistenceStore implements DataStore {
     private static final Logger LOG = LoggerFactory.getLogger(UnreliablePersistenceStore.class);
 
     public UnreliablePersistenceStore() {
         LOG.info("Created: {}", this.getClass().getSimpleName());
+    }
+
+    @Override
+    public Data loadByName(String name) {
+        throw new RuntimeException("Not implemented");
     }
 
     @Deprecated
@@ -27,6 +34,11 @@ public class UnreliablePersistenceStore {
             "quality", "🤮",
             "olfactory", "💩"
         );
+    }
+
+    @Override
+    public List<Data> loadAll() {
+        throw new RuntimeException("Not implemented");
     }
 
     @Deprecated
