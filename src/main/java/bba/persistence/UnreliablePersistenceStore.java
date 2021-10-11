@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static bba.persistence.Fail.failRandomly;
 
@@ -19,7 +20,7 @@ public class UnreliablePersistenceStore implements DataStore {
 
     @Override
     public Data loadByName(String name) {
-        throw new RuntimeException("Not implemented");
+        return new Data(loadByName_legacy(name));
     }
 
     @Deprecated
@@ -38,7 +39,9 @@ public class UnreliablePersistenceStore implements DataStore {
 
     @Override
     public List<Data> loadAll() {
-        throw new RuntimeException("Not implemented");
+        return loadAll_legacy().stream()
+            .map(Data::new)
+            .collect(Collectors.toList());
     }
 
     @Deprecated
