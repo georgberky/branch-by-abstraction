@@ -22,7 +22,7 @@ class UnreliablePersistenceStoreTest {
     }
 
     @Test
-    void loadAll() {
+    void loadAll_legacy() {
         List<Map<String, Object>> all = store.loadAll_legacy();
 
         assertSoftly(softly -> {
@@ -46,7 +46,7 @@ class UnreliablePersistenceStoreTest {
 
     @ParameterizedTest
     @ValueSource(strings = { "someName", "someOtherName", "yetAnotherName" })
-    void loadByName(String name) {
+    void loadByName_legacy(String name) {
         Map<String, Object> retrieved = store.loadByName_legacy(name);
 
         assertThat(retrieved)
