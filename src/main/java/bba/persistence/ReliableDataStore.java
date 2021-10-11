@@ -14,6 +14,10 @@ import static java.util.Collections.unmodifiableList;
 public class ReliableDataStore implements DataStore {
     private static final Logger LOG = LoggerFactory.getLogger(ReliableDataStore.class);
 
+    public ReliableDataStore() {
+        LOG.info("Created: {}", this.getClass().getSimpleName());
+    }
+
     @Override
     public Data loadByName(String name) {
         LOG.info("Serving data for {}", name);
