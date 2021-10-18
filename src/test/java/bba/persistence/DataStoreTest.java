@@ -17,40 +17,50 @@ import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-class DataStoreTest {
-    private DataStore store;
+class DataStoreTest extends AbstractDataStoreTest {
+
+    private UnreliablePersistenceStore unreliableStore;
 
     @BeforeEach
-    void setUp() {
+    protected void setUp() {
         store = new UnreliablePersistenceStore();
+        unreliableStore = (UnreliablePersistenceStore) store;
     }
 
     @Test
-    void loadAll() {
-        List<Data> all = store.loadAll();
+    void loadAll_legacy() {
+        List<Map<String, Object>> all = unreliableStore.loadAll_legacy();
 
         assertSoftly(softly -> {
             softly.assertThat(all)
-                .extracting(Data::name)
+                .extracting(m -> m.get("name"))
                 .containsExactlyInAnyOrder("firstName", "secondName", "thirdName");
 
             softly.assertThat(all)
-                .extracting(Data::quality)
-                .containsOnly(Quality.BAD);
+                .extracting(m -> LocalDateTime.parse((String) m.get("created")))
+                .allSatisfy(d -> d.isBefore(now()));
 
             softly.assertThat(all)
-                .extracting(Data::olfactory)
-                .containsOnly(Olfactory.SMELLY);
+                .extracting(m -> m.get("quality"))
+                .containsOnly("🤮");
+
+            softly.assertThat(all)
+                .extracting(m -> m.get("olfactory"))
+                .containsOnly("💩");
         });
     }
 
     @ParameterizedTest
     @ValueSource(strings = { "someName", "someOtherName", "yetAnotherName" })
-    void loadByName(String name) {
-        Data retrieved = store.loadByName(name);
+    void loadByName_legacy(String name) {
+        Map<String, Object> retrieved = unreliableStore.loadByName_legacy(name);
 
         assertThat(retrieved)
-            .extracting(Data::name, Data::quality, Data::olfactory)
-            .containsExactly(name, Quality.BAD, Olfactory.SMELLY);
+            .containsEntry("name", name)
+            .containsEntry("quality", "🤮")
+            .containsEntry("olfactory", "💩")
+            .hasEntrySatisfying("created", v -> LocalDateTime.parse((String) v)
+                .isBefore(now()));
     }
+
 }
