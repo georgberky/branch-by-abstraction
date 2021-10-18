@@ -27,6 +27,10 @@ public class ReliableDataStore implements DataStore {
 
     @Override
     public List<Data> loadAll() {
-        return unmodifiableList(loadAll());
+        return List.of(
+            loadByName("firstName"),
+            loadByName("secondName"),
+            loadByName("thirdName")
+        );
     }
 }
