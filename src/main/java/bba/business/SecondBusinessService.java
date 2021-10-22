@@ -19,7 +19,7 @@ public class SecondBusinessService {
 
     public void doSomething() {
         LOG.info("Doing something second!");
-        Map<String, Object> dataFromStore = store.loadByName("name2");
+        Map<String, Object> dataFromStore = store.loadByName_legacy("name2");
 
         LOG.info("Found data with name: {}", dataFromStore.get("name"));
         LOG.info("Data has quality: {}", dataFromStore.get("olfactory"));

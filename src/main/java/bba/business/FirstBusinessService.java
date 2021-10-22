@@ -19,7 +19,7 @@ public class FirstBusinessService {
 
     public void doSomething() {
         LOG.info("Doing something first!");
-        Map<String, Object> dataFromStore = store.loadByName("name1");
+        Map<String, Object> dataFromStore = store.loadByName_legacy("name1");
 
         LOG.info("Found data with name: {}", dataFromStore.get("name"));
         LOG.info("Data has quality: {}", dataFromStore.get("quality"));
