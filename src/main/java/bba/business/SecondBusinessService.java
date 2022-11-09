@@ -9,9 +9,9 @@ import java.util.Map;
 public class SecondBusinessService {
     private static final Logger LOG = LoggerFactory.getLogger(SecondBusinessService.class);
 
-    private final UnreliablePersistenceStore store;
+    private final Store store;
 
-    public SecondBusinessService(UnreliablePersistenceStore store) {
+    public SecondBusinessService(Store store) {
         this.store = store;
 
         LOG.info("Created: {}", this.getClass().getSimpleName());
@@ -19,9 +19,9 @@ public class SecondBusinessService {
 
     public void doSomething() {
         LOG.info("Doing something second!");
-        Map<String, Object> dataFromStore = store.loadByName("name2");
+        Data dataFromStore = store.loadByName("name2");
 
-        LOG.info("Found data with name: {}", dataFromStore.get("name"));
-        LOG.info("Data has quality: {}", dataFromStore.get("olfactory"));
+        LOG.info("Found data with name: {}", dataFromStore.name());
+        LOG.info("Data has quality: {}", dataFromStore.olfactory());
     }
 }

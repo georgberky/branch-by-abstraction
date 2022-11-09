@@ -1,21 +1,30 @@
 package bba.persistence;
 
+import bba.business.Data;
+import bba.business.Store;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static bba.persistence.Fail.failRandomly;
 
-public class UnreliablePersistenceStore {
+public class UnreliablePersistenceStore implements Store {
     private static final Logger LOG = LoggerFactory.getLogger(UnreliablePersistenceStore.class);
 
     public UnreliablePersistenceStore() {
         LOG.info("Created: {}", this.getClass().getSimpleName());
     }
 
-    public Map<String, Object> loadByName(String name) {
+    @Override
+    public Data loadByName(String name) {
+        return new Data(loadByName_legacy(name));
+    }
+
+    @Deprecated
+    public Map<String, Object> loadByName_legacy(String name) {
         LOG.info("Serving data for {}", name);
 
         failRandomly(() -> new DatabaseException("database locked!"));
@@ -28,11 +37,19 @@ public class UnreliablePersistenceStore {
         );
     }
 
-    public List<Map<String, Object>> loadAll() {
+    @Override
+    public List<Data> loadAll() {
+        return loadAll_legacy().stream()
+            .map(Data::new)
+            .collect(Collectors.toList());
+    }
+
+    @Deprecated
+    public List<Map<String, Object>> loadAll_legacy() {
         return List.of(
-            loadByName("firstName"),
-            loadByName("secondName"),
-            loadByName("thirdName")
+            loadByName_legacy("firstName"),
+            loadByName_legacy("secondName"),
+            loadByName_legacy("thirdName")
         );
     }
 }
