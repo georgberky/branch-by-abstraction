@@ -1,7 +1,9 @@
 package bba.app;
 
+import bba.business.DataStore;
 import bba.business.FirstBusinessService;
 import bba.business.SecondBusinessService;
+import bba.persistence.ReliableDataStore;
 import bba.persistence.UnreliablePersistenceStore;
 import bba.web.HttpApi;
 import bba.web.Request;
@@ -14,7 +16,7 @@ public class Main {
     public static void main(String... args) {
         LOG.info("Booting application");
 
-        var store = new UnreliablePersistenceStore();
+        DataStore store = initializePersistence(System.getProperty("persistence.implementation"));
 
         var firstService = new FirstBusinessService(store);
         var secondService = new SecondBusinessService(store);
@@ -24,5 +26,12 @@ public class Main {
         var response = http.handleRequest(new Request());
 
         LOG.info("Response: {}", response);
+    }
+
+    private static DataStore initializePersistence(String property) {
+        if("new".equals(property)) {
+            return new ReliableDataStore();
+        }
+        return new UnreliablePersistenceStore();
     }
 }
