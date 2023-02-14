@@ -1,5 +1,8 @@
 package bba.persistence;
 
+import bba.business.Data;
+import bba.business.Olfactory;
+import bba.business.Quality;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,17 +16,23 @@ import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-class UnreliablePersistenceStoreTest {
-    private UnreliablePersistenceStore store;
+@SuppressWarnings("ALL")
+class UnreliablePersistenceStoreTest extends DataStoreTest {
+
+    public UnreliablePersistenceStoreTest() {
+        super(new UnreliablePersistenceStore());
+    }
+
+    private UnreliablePersistenceStore legacyStore;
 
     @BeforeEach
     void setUp() {
-        store = new UnreliablePersistenceStore();
+        legacyStore = new UnreliablePersistenceStore();
     }
 
     @Test
-    void loadAll() {
-        List<Map<String, Object>> all = store.loadAll();
+    void loadAll_legacy() {
+        List<Map<String, Object>> all = legacyStore.loadAll_legacy();
 
         assertSoftly(softly -> {
             softly.assertThat(all)
@@ -46,8 +55,8 @@ class UnreliablePersistenceStoreTest {
 
     @ParameterizedTest
     @ValueSource(strings = { "someName", "someOtherName", "yetAnotherName" })
-    void loadByName(String name) {
-        Map<String, Object> retrieved = store.loadByName(name);
+    void loadByName_legacy(String name) {
+        Map<String, Object> retrieved = legacyStore.loadByName_legacy(name);
 
         assertThat(retrieved)
             .containsEntry("name", name)
@@ -56,4 +65,5 @@ class UnreliablePersistenceStoreTest {
             .hasEntrySatisfying("created", v -> LocalDateTime.parse((String) v)
                 .isBefore(now()));
     }
+
 }
